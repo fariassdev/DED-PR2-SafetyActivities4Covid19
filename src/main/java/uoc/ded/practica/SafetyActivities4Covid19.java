@@ -612,6 +612,17 @@ public interface SafetyActivities4Covid19 {
      */
     public Iterador<Organization> best5Organizations() throws NoOrganizationException;
 
+    /**
+     * Método que proporciona las 10 mejor actividades según su valoración
+     *
+     * @return devuelve un iterador con las 10 mejores actividades
+     * @throws NoActivitiesException se lanza la excepción en caso de que no exista ninguna actividad
+     * @pre cierto.
+     * @tabla devuelve un iterador con las 10 mejores actividades. En caso de que no exista
+     * ninguna actividad se tendrá que indicar un error
+     */
+    public Iterador<Activity> best10Activities() throws ActivityNotFoundException;
+
 
     /**
      * Método que proporciona el trabajador identificado
