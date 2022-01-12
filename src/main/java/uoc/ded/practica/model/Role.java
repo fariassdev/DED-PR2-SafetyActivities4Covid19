@@ -2,11 +2,11 @@ package uoc.ded.practica.model;
 
 public class Role {
     private String roleId;
-    private String description;
+    private String name;
 
-    public Role(String roleId, String description) {
+    public Role(String roleId, String name) {
         this.roleId = roleId;
-        this.description = description;
+        this.name = name;
     }
 
     public String getRoleId() {
@@ -17,11 +17,15 @@ public class Role {
         this.roleId = roleId;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean is(String roleId) {
+        return this.roleId.equals(roleId);
     }
 }

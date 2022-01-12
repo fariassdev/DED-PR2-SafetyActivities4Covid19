@@ -315,4 +315,26 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         return this.numRoles;
     }
 
+    public Role getRole(String roleId) {
+        boolean found = false;
+
+        int i = 0;
+        while (!found && i < this.numRoles()) {
+            found = this.roles[i].is(roleId);
+            i++;
+        }
+
+        return (found ? this.roles[i - 1] : null);
+    }
+
+    public void addRole(String roleId, String name) {
+        Role role = this.getRole(roleId);
+
+        if (role == null) {
+            this.roles[this.numRoles++] = new Role(roleId, name);
+        } else {
+            role.setName(name);
+        }
+    }
+
 }
