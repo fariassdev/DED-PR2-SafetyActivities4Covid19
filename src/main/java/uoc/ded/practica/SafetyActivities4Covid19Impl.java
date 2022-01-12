@@ -14,9 +14,7 @@ import uoc.ded.practica.exceptions.UserNotInActivityException;
 import uoc.ded.practica.model.*;
 import uoc.ded.practica.util.DiccionarioOrderedVector;
 import uoc.ded.practica.util.OrderedVector;
-import uoc.ei.tads.Iterador;
-import uoc.ei.tads.Pila;
-import uoc.ei.tads.PilaVectorImpl;
+import uoc.ei.tads.*;
 
 public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
 
@@ -27,7 +25,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     private int numOrganizations;
 
     private ColaConPrioridad<Record> records;
-    private DiccionarioOrderedVector<String, Activity> activities;
+    private DiccionarioAVLImpl<String, Activity> activities;
 
     private int totalRecords;
     private int rejectedRecords;
@@ -46,7 +44,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         organizations = new Organization[O];
         numOrganizations = 0;
         records = new ColaConPrioridad<Record>();
-        activities = new DiccionarioOrderedVector<String, Activity>(A, Activity.CMP_K);
+        activities = new DiccionarioAVLImpl<String, Activity>();
         totalRecords = 0;
         rejectedRecords = 0;
         mostActiveUser = null;
