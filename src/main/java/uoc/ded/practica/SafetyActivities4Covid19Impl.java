@@ -3,14 +3,7 @@ package uoc.ded.practica;
 import java.time.LocalDate;
 import java.util.Date;
 
-import uoc.ded.practica.exceptions.ActivityNotFoundException;
-import uoc.ded.practica.exceptions.LimitExceededException;
-import uoc.ded.practica.exceptions.NoActivitiesException;
-import uoc.ded.practica.exceptions.NoRatingsException;
-import uoc.ded.practica.exceptions.NoRecordsException;
-import uoc.ded.practica.exceptions.OrganizationNotFoundException;
-import uoc.ded.practica.exceptions.UserNotFoundException;
-import uoc.ded.practica.exceptions.UserNotInActivityException;
+import uoc.ded.practica.exceptions.*;
 import uoc.ded.practica.model.*;
 import uoc.ded.practica.util.OrderedVector;
 import uoc.ei.tads.*;
@@ -74,6 +67,14 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         }
     }
 
+    public void addOrganization(String organizationId, String name, String description) {
+        
+    }
+
+    public void addRecord(String recordId, String actId, String description, Date date, LocalDate dateRecord, Mode mode, int num, String organizationId) throws OrganizationNotFoundException {
+
+    }
+
     public void addUser(User user) {
         users[numUsers++] = user;
     }
@@ -87,6 +88,10 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
                 return u;
             }
         }
+        return null;
+    }
+
+    public Organization getOrganization(String organizationId) {
         return null;
     }
 
@@ -132,6 +137,10 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         	rejectedRecords++;
         }
         return record;
+    }
+
+    public Order createTicket(String userId, String actId, LocalDate date) throws UserNotFoundException, ActivityNotFoundException, LimitExceededException {
+        return null;
     }
 
     public Record currentRecord() {
@@ -286,6 +295,14 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         return activities.numElems();
     }
 
+    public int numActivitiesByOrganization(String organizationId) {
+        return 0;
+    }
+
+    public int numRecordsByOrganization(String organizationId) {
+        return 0;
+    }
+
     public int numActivitiesByOrganization(int organizationId) {
         Organization organization = getOrganization(organizationId);
 
@@ -315,6 +332,10 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         return this.numRoles;
     }
 
+    public int numWorkersByRole(String roleId) {
+        return 0;
+    }
+
     public Role getRole(String roleId) {
         boolean found = false;
 
@@ -327,6 +348,18 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         return (found ? this.roles[i - 1] : null);
     }
 
+    public Group getGroup(String groupId) {
+        return null;
+    }
+
+    public int numWorkers() {
+        return 0;
+    }
+
+    public int numWorkers(String organizationId) {
+        return 0;
+    }
+
     public void addRole(String roleId, String name) {
         Role role = this.getRole(roleId);
 
@@ -335,6 +368,66 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         } else {
             role.setName(name);
         }
+    }
+
+    public void addWorker(String userId, String name, String surname, LocalDate birthday, boolean covidCertificate, String roleId, String organizationId) {
+
+    }
+
+    public Iterador<Worker> getWorkersByOrganization(String organizationId) throws OrganizationNotFoundException, NoWorkersException {
+        return null;
+    }
+
+    public Iterador<User> getUsersInActivity(String activityId) throws ActivityNotFoundException, NoUserException {
+        return null;
+    }
+
+    public Badge getBadge(String userId, LocalDate day) throws UserNotFoundException {
+        return null;
+    }
+
+    public void addGroup(String groupId, String description, LocalDate date, String... members) {
+
+    }
+
+    public Iterador<User> membersOf(String groupId) throws GroupNotFoundException, NoUserException {
+        return null;
+    }
+
+    public double valueOf(String groupId) throws GroupNotFoundException {
+        return 0;
+    }
+
+    public Order createTicketByGroup(String groupId, String actId, LocalDate date) throws GroupNotFoundException, ActivityNotFoundException, LimitExceededException {
+        return null;
+    }
+
+    public Order getOrder(String orderId) throws OrderNotFoundException {
+        return null;
+    }
+
+    public Iterador<Worker> getWorkersByRole(String roleId) throws NoWorkersException {
+        return null;
+    }
+
+    public Iterador<Activity> getActivitiesByOrganization(String organizationId) throws NoActivitiesException {
+        return null;
+    }
+
+    public Iterador<Record> getRecordsByOrganization(String organizationId) throws NoRecordsException {
+        return null;
+    }
+
+    public Iterador<Organization> best5Organizations() throws NoOrganizationException {
+        return null;
+    }
+
+    public Iterador<Activity> best10Activities() throws ActivityNotFoundException {
+        return null;
+    }
+
+    public Worker getWorker(String workerId) {
+        return null;
     }
 
 }
