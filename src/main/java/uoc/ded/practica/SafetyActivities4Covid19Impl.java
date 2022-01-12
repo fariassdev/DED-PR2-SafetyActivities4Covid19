@@ -29,6 +29,9 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
 
     private int totalRecords;
     private int rejectedRecords;
+    private int numRoles;
+    private int numOrders;
+    private int numGroups;
 
     private User mostActiveUser;
     private OrderedVector<Activity> bestActivity;
@@ -41,6 +44,9 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     public SafetyActivities4Covid19Impl() {
         users = new User[U];
         numUsers = 0;
+        numRoles = 0;
+        numOrders = 0;
+        numGroups = 0;
         organizations = new Organization[O];
         numOrganizations = 0;
         records = new ColaConPrioridad<Record>();
@@ -298,6 +304,18 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         Activity activity = getActivity(actId);
 
         return (activity != null ? activity.availabilityOfTickets() : 0);
+    }
+
+    public int numGroups() {
+        return this.numGroups;
+    }
+
+    public int numOrders() {
+        return this.numOrders;
+    }
+
+    public int numRoles() {
+        return this.numRoles;
     }
 
 }
