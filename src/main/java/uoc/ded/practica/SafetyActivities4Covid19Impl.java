@@ -26,7 +26,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     private Organization[] organizations;
     private int numOrganizations;
 
-    private Pila<Record> records;
+    private ColaConPrioridad<Record> records;
     private DiccionarioOrderedVector<String, Activity> activities;
 
     private int totalRecords;
@@ -45,7 +45,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         numUsers = 0;
         organizations = new Organization[O];
         numOrganizations = 0;
-        records = new PilaVectorImpl<Record>();
+        records = new ColaConPrioridad<Record>();
         activities = new DiccionarioOrderedVector<String, Activity>(A, Activity.CMP_K);
         totalRecords = 0;
         rejectedRecords = 0;
