@@ -114,12 +114,12 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         	throw new OrganizationNotFoundException();
         }
 
-        records.apilar(new Record(recordId, actId, description, date, mode, num, organization));
+        records.encolar(new Record(recordId, actId, description, date, mode, num, organization));
         totalRecords++;
     }
 
-    public void updateRecord(Status status, Date date, String description) throws NoRecordsException {
-        Record record = records.desapilar();
+    public Record updateRecord(Status status, Date date, String description) throws NoRecordsException {
+        Record record = records.desencolar();
         if (record  == null) {
         	throw new NoRecordsException();
         }
@@ -132,10 +132,11 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         else {
         	rejectedRecords++;
         }
+        return record;
     }
 
     public Record currentRecord() {
-        return (records.numElems() > 0 ? records.cima() : null);
+        return (records.numElems() > 0 ? records.primero() : null);
     }
 
     public Iterador<Activity> getActivitiesByOrganization(int organizationId) throws NoActivitiesException {
@@ -192,13 +193,8 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
 
-    public Ticket assignSeat(String actId) throws ActivityNotFoundException {
-        Activity activity = getActivity(actId);
-        if (activity == null) {
-        	throw new ActivityNotFoundException();
-        }
-
-        return activity.pop();
+    public Order assignSeat(String actId) throws ActivityNotFoundException {
+        return null;
     }
 
     public void addRating(String actId, Rating rating, String message, String userId)
