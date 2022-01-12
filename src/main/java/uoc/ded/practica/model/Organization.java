@@ -4,7 +4,11 @@ import uoc.ei.tads.Iterador;
 import uoc.ei.tads.Lista;
 import uoc.ei.tads.ListaEncadenada;
 
+import java.util.Comparator;
+
 public class Organization {
+    public static final Comparator<Organization> CMP_V = (Organization o1, Organization o2)->Double.compare(o1.getAverageActivityRating(), o2.getAverageActivityRating());
+
     private int organizationId;
     private String description;
     private  String name;
@@ -55,5 +59,15 @@ public class Organization {
 
     public boolean hasActivities() {
         return activities.numElems() > 0;
+    }
+
+    public Double getAverageActivityRating() {
+        Double activityRatingSum = 0.;
+        Iterador<Activity> it = this.activities.elementos();
+        while (it.haySiguiente()) {
+            activityRatingSum = activityRatingSum + it.siguiente().rating();
+        }
+        Double activityRatingAverage = activityRatingSum / this.activities.numElems();
+        return activityRatingAverage;
     }
 }
