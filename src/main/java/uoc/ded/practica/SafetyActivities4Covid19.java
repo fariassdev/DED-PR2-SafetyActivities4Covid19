@@ -3,19 +3,8 @@ package uoc.ded.practica;
 import java.time.LocalDate;
 import java.util.Date;
 
-import uoc.ded.practica.exceptions.ActivityNotFoundException;
-import uoc.ded.practica.exceptions.LimitExceededException;
-import uoc.ded.practica.exceptions.NoActivitiesException;
-import uoc.ded.practica.exceptions.NoRatingsException;
-import uoc.ded.practica.exceptions.NoRecordsException;
-import uoc.ded.practica.exceptions.OrganizationNotFoundException;
-import uoc.ded.practica.exceptions.UserNotFoundException;
-import uoc.ded.practica.exceptions.UserNotInActivityException;
-import uoc.ded.practica.model.Activity;
-import uoc.ded.practica.model.Organization;
-import uoc.ded.practica.model.Record;
-import uoc.ded.practica.model.Ticket;
-import uoc.ded.practica.model.User;
+import uoc.ded.practica.exceptions.*;
+import uoc.ded.practica.model.*;
 import uoc.ei.tads.Iterador;
 
 
