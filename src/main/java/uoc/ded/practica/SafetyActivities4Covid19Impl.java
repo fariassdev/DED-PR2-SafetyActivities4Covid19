@@ -27,6 +27,8 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     private ColaConPrioridad<Record> records;
     private DiccionarioAVLImpl<String, Activity> activities;
 
+    private DiccionarioAVLImpl<String, Order> orders;
+
     private int totalRecords;
     private int rejectedRecords;
     private int numRoles;
