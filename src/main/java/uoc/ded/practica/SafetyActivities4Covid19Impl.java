@@ -12,7 +12,6 @@ import uoc.ded.practica.exceptions.OrganizationNotFoundException;
 import uoc.ded.practica.exceptions.UserNotFoundException;
 import uoc.ded.practica.exceptions.UserNotInActivityException;
 import uoc.ded.practica.model.*;
-import uoc.ded.practica.util.DiccionarioOrderedVector;
 import uoc.ded.practica.util.OrderedVector;
 import uoc.ei.tads.*;
 
