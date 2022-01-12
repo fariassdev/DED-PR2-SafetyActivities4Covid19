@@ -36,6 +36,8 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     private OrderedVector<Activity> bestActivity;
 
     private Role[] roles;
+
+    private OrderedVector<Activity> bestActivitiesByRating;
     public SafetyActivities4Covid19Impl() {
         users = new User[U];
         numUsers = 0;
@@ -48,6 +50,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         mostActiveUser = null;
         bestActivity = new OrderedVector<Activity>(A, Activity.CMP_V);
         roles = new Role[MAX_NUMBER_OF_ROLES];
+        bestActivitiesByRating = new OrderedVector<Activity>(A, Activity.CMP_V);
     }
 
     public void addUser(String userId, String name, String surname, LocalDate birthday, boolean covidCertificate) {
