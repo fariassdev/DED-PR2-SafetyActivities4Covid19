@@ -1,14 +1,12 @@
 package uoc.ded.practica.model;
 
-import uoc.ded.practica.SafetyActivities4Covid19;
-
 public class Role {
     private String roleId;
-    private String name;
+    private String description;
 
-    public Role(String roleId, String name) {
+    public Role(String roleId, String description) {
         this.roleId = roleId;
-        this.name = name;
+        this.description = description;
     }
 
     public String getRoleId() {
@@ -19,11 +17,11 @@ public class Role {
         this.roleId = roleId;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
