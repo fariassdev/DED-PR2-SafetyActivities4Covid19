@@ -9,4 +9,12 @@ public class Worker extends User {
 	public Worker(String idUser, String name, String surname, LocalDate birthday, boolean covidCertificate) {
         super(idUser, name, surname, birthday, covidCertificate);
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
