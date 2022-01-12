@@ -10,6 +10,10 @@ public class Worker extends User {
         super(idUser, name, surname, birthday, covidCertificate);
     }
 
+    public String getRoleId() {
+	    return this.role.getRoleId();
+    }
+
     public Role getRole() {
         return role;
     }
