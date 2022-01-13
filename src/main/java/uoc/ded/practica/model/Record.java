@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Record {
 
-    private String actId;
+    private Activity activity;
     private String description;
     private String recordId;
     private Date dateAct;
@@ -18,10 +18,10 @@ public class Record {
     private Organization organization;
 
 
-    public Record(String recordId, String actId, String description, Date date,
+    public Record(String recordId, Activity activity, String description, Date date,
                   SafetyActivities4Covid19.Mode mode, int num, Organization organization) {
         this.recordId = recordId;
-        this.actId = actId;
+        this.activity = activity;
         this.description = description;
         this.dateAct = date;
         this.mode = mode;
@@ -30,12 +30,12 @@ public class Record {
         this.organization = organization;
     }
 
-    public String getActId() {
-        return actId;
+    public Activity getActivity() {
+        return activity;
     }
 
-    public void setActId(String actId) {
-        this.actId = actId;
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 
     public String getDescription() {
@@ -113,7 +113,7 @@ public class Record {
     }
 
     public Activity newActivity() {
-        Activity activity = new Activity(this.actId, this.description, this.dateAct, this.mode, this.num, this);
+        Activity activity = new Activity(this.activity.getActId(), this.description, this.dateAct, this.mode, this.num, this);
         this.organization.addActivity(activity);
 
         return activity;
