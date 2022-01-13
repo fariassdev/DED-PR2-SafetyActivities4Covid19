@@ -178,26 +178,28 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         return (double)rejectedRecords / totalRecords;
     }
 
-    public void createTicket(String userId, String actId) throws UserNotFoundException,
+    public Order createTicket(String userId, String actId, LocalDate date) throws UserNotFoundException,
             ActivityNotFoundException, LimitExceededException {
 
-        User user = getUser(userId);
-        if (user == null) {
-        	throw new UserNotFoundException();
-        }
+        //User user = getUser(userId);
+        //if (user == null) {
+        //	throw new UserNotFoundException();
+        //}
+        //
+        //Activity activity = getActivity(actId);
+        //if (activity  == null) {
+        //	throw new ActivityNotFoundException();
+        //}
+        //
+        //if (!activity.hasAvailabilityOfTickets()) {
+        //	throw new LimitExceededException();
+        //}
+        //
+        //activity.addOrder(user);
+        //user.addActivity(activity);
+        //updateMostActiveUser(user);
 
-        Activity activity = getActivity(actId);
-        if (activity  == null) {
-        	throw new ActivityNotFoundException();
-        }
-
-        if (!activity.hasAvailabilityOfTickets()) {
-        	throw new LimitExceededException();
-        }
-
-        activity.addTicket(user);
-        user.addActivity(activity);
-        updateMostActiveUser(user);
+        return null;
     }
 
 
