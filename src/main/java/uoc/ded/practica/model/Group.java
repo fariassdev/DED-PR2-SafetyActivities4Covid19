@@ -46,4 +46,18 @@ public class Group {
     public void setMembers(String[] members) {
         this.members = members;
     }
+
+    public boolean hasMembers() {
+        if (this.members != null) {
+            return this.members.length > 0;
+        }
+        return false;
+    }
+
+    public int numMembers() {
+        if (this.members != null) {
+            return this.members.length;
+        }
+        return 0;
+    }
 }
