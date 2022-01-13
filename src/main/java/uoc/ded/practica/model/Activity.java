@@ -4,11 +4,7 @@ import java.util.Comparator;
 import java.util.Date;
 
 import uoc.ded.practica.SafetyActivities4Covid19;
-import uoc.ei.tads.Cola;
-import uoc.ei.tads.ColaVectorImpl;
-import uoc.ei.tads.Iterador;
-import uoc.ei.tads.Lista;
-import uoc.ei.tads.ListaEncadenada;
+import uoc.ei.tads.*;
 
 public class Activity implements Comparable<Activity> {
     public static final Comparator<String> CMP_K = (String o1, String o2)->o1.compareTo(o2);
@@ -19,10 +15,9 @@ public class Activity implements Comparable<Activity> {
     private Date date;
     private SafetyActivities4Covid19.Mode mode;
     private int total;
-    private int nextSeat;
     private int availabilityOfTickets;
     private Record record;
-    private Cola<Ticket> tickets;
+    private ColaConPrioridad<Order> orders;
     private Lista<Rating> ratings;
     private int totalRatings;
 
@@ -33,10 +28,9 @@ public class Activity implements Comparable<Activity> {
         this.date = dateAct;
         this.mode = mode;
         this.total = num;
-        this.nextSeat = 1;
         this.availabilityOfTickets = num;
         this.record = record;
-        tickets = new ColaVectorImpl<Ticket>();
+        orders = new ColaConPrioridad<Order>();
         ratings = new ListaEncadenada<Rating>();
     }
 
@@ -49,15 +43,9 @@ public class Activity implements Comparable<Activity> {
         return (availabilityOfTickets > 0  );
     }
 
-    public void addTicket(User user) {
-        tickets.encolar(new Ticket (user, this));
+    public void addOrder(User user, ColaConPrioridad<Ticket> tickets, int seat) {
+        orders.encolar(new Order("test", user, this, tickets, seat));
         availabilityOfTickets--;
-    }
-
-    public Ticket pop() {
-        Ticket t = tickets.desencolar();
-        t.setSeat(nextSeat++);
-        return t;
     }
 
     public boolean is(String actId) {
@@ -83,7 +71,7 @@ public class Activity implements Comparable<Activity> {
     }
 
     public int numPendingTickets() {
-        return tickets.numElems();
+        return orders.numElems();
     }
 
     public int availabilityOfTickets() {
