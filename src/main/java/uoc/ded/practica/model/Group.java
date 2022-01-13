@@ -1,19 +1,17 @@
 package uoc.ded.practica.model;
 
-import uoc.ded.practica.SafetyActivities4Covid19;
-
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Group {
     private String groupId;
     private String description;
-    private Date creationDate;
+    private LocalDate date;
     private String[] members;
 
-    public Group(String groupId, String description, Date creationDate, String[] members) {
+    public Group(String groupId, String description, LocalDate date, String[] members) {
         this.groupId = groupId;
         this.description = description;
-        this.creationDate = creationDate;
+        this.date = date;
         this.members = members;
     }
 
@@ -33,12 +31,12 @@ public class Group {
         this.description = description;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public String[] getMembers() {
