@@ -3,6 +3,7 @@ package uoc.ded.practica.model;
 import java.time.LocalDate;
 import java.util.Comparator;
 
+import uoc.ded.practica.SafetyActivities4Covid19;
 import uoc.ei.tads.Iterador;
 import uoc.ei.tads.Lista;
 import uoc.ei.tads.ListaEncadenada;
@@ -20,14 +21,15 @@ public class User implements Comparable<User>{
     private Lista<Activity> activities;
     private LocalDate birthday; // No necesitamos la hora de nacimiento, LocalDate no lleva hora
     private boolean covidCertificate;
+    private SafetyActivities4Covid19.Badge badge;
 
-	public User(String idUser, String name, String surname, LocalDate birthday, boolean covidCertificate) {
-        this.setId(idUser);
-        this.setName(name);
-        this.setSurname(surname);
-        this.setBirthday(birthday);
-        this.setCovidCertificate(covidCertificate);
-        this.activities = new ListaEncadenada<Activity>();
+    public User(String id, String name, String surname, LocalDate birthday, boolean covidCertificate) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.birthday = birthday;
+        this.covidCertificate = covidCertificate;
+        this.badge = null;
     }
 
     public void setName(String name) {
@@ -110,5 +112,13 @@ public class User implements Comparable<User>{
 
     public boolean hasActivities() {
         return activities.numElems() > 0;
+    }
+
+    public SafetyActivities4Covid19.Badge getBadge(LocalDate date) {
+        return badge;
+    }
+
+    public void setBadge(SafetyActivities4Covid19.Badge badge) {
+        this.badge = badge;
     }
 }
