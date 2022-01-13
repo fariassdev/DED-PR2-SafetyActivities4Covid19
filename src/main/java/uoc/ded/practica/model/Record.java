@@ -118,4 +118,12 @@ public class Record {
 
         return activity;
     }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
 }
