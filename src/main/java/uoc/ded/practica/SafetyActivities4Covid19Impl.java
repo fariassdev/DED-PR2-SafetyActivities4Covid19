@@ -385,11 +385,12 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         ListaEncadenada<User> memberList = new ListaEncadenada<User>();
         for (String userId : members) {
             User user = this.users.consultar(userId);
-            memberList.insertarAlPrincipio(user);
+            memberList.insertarAlFinal(user);
         }
         if (group == null) {
             group = new Group(groupId, description, date, memberList);
             this.groups.insertar(groupId, group);
+            numGroups++;
         } else {
             group.setDescription(description);
             group.setDate(date);
