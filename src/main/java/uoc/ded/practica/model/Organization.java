@@ -1,8 +1,9 @@
 package uoc.ded.practica.model;
 
 import uoc.ei.tads.Iterador;
-import uoc.ei.tads.Lista;
 import uoc.ei.tads.ListaEncadenada;
+import uoc.ei.tads.Posicion;
+import uoc.ei.tads.Recorrido;
 
 import java.util.Comparator;
 
@@ -11,14 +12,16 @@ public class Organization {
 
     private String organizationId;
     private String description;
-    private  String name;
-    private Lista<Activity> activities;
+    private String name;
+    private ListaEncadenada<Activity> activities;
+    private ListaEncadenada<Worker> workers;
 
     public Organization(String organizationId, String name, String description) {
         this.organizationId = organizationId;
         this.name = name;
         this.description = description;
         activities = new ListaEncadenada<Activity>();
+        workers = new ListaEncadenada<Worker>();
     }
 
     public String getName() {
@@ -59,6 +62,37 @@ public class Organization {
 
     public boolean hasActivities() {
         return activities.numElems() > 0;
+    }
+
+    public Iterador<Worker> workers() {
+        return workers.elementos();
+    }
+
+    public Recorrido<Worker> workerPositions() {
+        return workers.posiciones();
+    }
+
+    public void addWorker( Worker user) {
+        workers.insertarAlFinal(user);
+    }
+
+    public void deleteWorker( String workerId ) {
+        for ( Recorrido<Worker> it = this.workerPositions(); it.haySiguiente(); ) {
+            final Posicion<Worker> workerPosition = it.siguiente();
+            Worker worker = workerPosition.getElem();
+            if ( worker.getId().equals( workerId ) ) {
+                workers.borrar( workerPosition );
+            }
+
+        }
+    }
+
+    public boolean hasWorkers() {
+        return workers.numElems() > 0;
+    }
+
+    public int numWorkers() {
+        return workers.numElems();
     }
 
     public Double getAverageActivityRating() {
