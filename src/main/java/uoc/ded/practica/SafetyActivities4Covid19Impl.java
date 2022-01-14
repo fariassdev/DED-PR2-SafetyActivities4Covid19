@@ -47,6 +47,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         records = new ColaConPrioridad<Record>(Record.CMP_V);
         activities = new DiccionarioAVLImpl<String, Activity>();
         orders = new DiccionarioAVLImpl<String, Order>();
+        groups = new DiccionarioAVLImpl<String, Group>();
         totalRecords = 0;
         rejectedRecords = 0;
         mostActiveUser = null;
