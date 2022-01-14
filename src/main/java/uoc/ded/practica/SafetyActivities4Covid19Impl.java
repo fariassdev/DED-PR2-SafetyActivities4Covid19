@@ -512,6 +512,14 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public Iterador<Worker> getWorkersByRole(String roleId) throws NoWorkersException {
+        for (Role role : this.roles) {
+            if ( role.getRoleId().equals( roleId ) ) {
+                if (!role.hasWorkers()) {
+                    throw new NoWorkersException();
+                }
+                return role.workers();
+            }
+        }
         return null;
     }
 
