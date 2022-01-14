@@ -190,6 +190,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         activity.addOrder(order);
         user.addActivity(activity);
         updateMostActiveUser(user);
+        activity.addUser( user );
 
         return order;
     }
@@ -373,7 +374,12 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public Iterador<User> getUsersInActivity(String activityId) throws ActivityNotFoundException, NoUserException {
-        return null;
+        Activity activity = this.activities.consultar( activityId );
+        if (activity == null) {
+            throw new ActivityNotFoundException();
+        }
+
+        return activity.users();
     }
 
     public Badge getBadge(String userId, LocalDate day) throws UserNotFoundException {
@@ -441,6 +447,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
             tickets.insertarAlPrincipio(ticket);
             user.addActivity(activity);
             updateMostActiveUser(user);
+            activity.addUser( user );
         }
 
         // TODO: Extract to generateOrderId(LocalDate date, String userId) method

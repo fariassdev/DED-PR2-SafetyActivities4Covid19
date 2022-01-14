@@ -20,6 +20,7 @@ public class Activity implements Comparable<Activity> {
     private Lista<Rating> ratings;
     private int totalRatings;
     private int nextSeat;
+    private ListaEncadenada<User> users;
 
     public Activity(String actId, String description, Date dateAct, SafetyActivities4Covid19.Mode mode, int num, Record record) {
         this.actId = actId;
@@ -31,6 +32,7 @@ public class Activity implements Comparable<Activity> {
         this.nextSeat = 1;
         orders = new ColaConPrioridad<Order>(Order.CMP_V);
         ratings = new ListaEncadenada<Rating>();
+        users = new ListaEncadenada<User>();
     }
 
     public String getActId() {
@@ -91,6 +93,14 @@ public class Activity implements Comparable<Activity> {
 
     public void setOrders(ColaConPrioridad<Order> orders) {
         this.orders = orders;
+    }
+
+    public Iterador<User> users() {
+        return this.users.elementos();
+    }
+
+    public void addUser(User user) {
+        this.users.insertarAlFinal( user );
     }
 
     @Override
