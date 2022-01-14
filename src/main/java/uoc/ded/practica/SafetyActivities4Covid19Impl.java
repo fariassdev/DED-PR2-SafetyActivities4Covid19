@@ -517,7 +517,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public Worker getWorker(String workerId) {
-        return null;
+        return (Worker) this.users.consultar( workerId );
     }
 
 }
