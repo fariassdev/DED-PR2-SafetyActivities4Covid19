@@ -380,11 +380,33 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public void addGroup(String groupId, String description, LocalDate date, String... members) {
-
+        Group group = this.groups.consultar(groupId);
+        ListaEncadenada<User> memberList = new ListaEncadenada<User>();
+        for (String userId : members) {
+            User user = this.users.consultar(userId);
+            memberList.insertarAlPrincipio(user);
+        }
+        if (group == null) {
+            group = new Group(groupId, description, date, memberList);
+            this.groups.insertar(groupId, group);
+        } else {
+            group.setDescription(description);
+            group.setDate(date);
+            group.setMembers(memberList);
+        }
     }
 
     public Iterador<User> membersOf(String groupId) throws GroupNotFoundException, NoUserException {
-        return null;
+        Group group = this.groups.consultar(groupId);
+        if (group == null) {
+            throw new GroupNotFoundException();
+        }
+
+        if (group.numMembers() == 0) {
+            throw new NoUserException();
+        }
+
+        return group.members();
     }
 
     public double valueOf(String groupId) throws GroupNotFoundException {
