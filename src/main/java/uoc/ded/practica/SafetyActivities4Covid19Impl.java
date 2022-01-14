@@ -13,6 +13,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
 
     private TablaDispersion<String, User> users;
     private int numUsers;
+    private int numWorkers;
 
     private TablaDispersion<String, Organization> organizations;
     private int numOrganizations;
@@ -42,6 +43,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         numRoles = 0;
         numOrders = 0;
         numGroups = 0;
+        numWorkers = 0;
         organizations = new TablaDispersion<String, Organization>(O);
         numOrganizations = 0;
         records = new ColaConPrioridad<Record>(Record.CMP_V);
@@ -348,7 +350,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public int numWorkers() {
-        return 0;
+        return this.numWorkers;
     }
 
     public int numWorkers(String organizationId) {
@@ -365,8 +367,16 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         }
     }
 
-    public void addWorker(String userId, String name, String surname, LocalDate birthday, boolean covidCertificate, String roleId, String organizationId) {
-
+    public void addWorker( String userId, String name, String surname, LocalDate birthday, boolean covidCertificate, String roleId, String organizationId ) {
+        User user = this.users.consultar( userId );
+        if ( user == null ) {
+            numUsers++;
+            numWorkers++;
+        }
+        Role role = this.getRole( roleId );
+        Organization organization = this.organizations.consultar( organizationId );
+        user = new Worker( userId, name, surname, birthday, covidCertificate, role, organization );
+        this.users.insertar( userId, user );
     }
 
     public Iterador<Worker> getWorkersByOrganization(String organizationId) throws OrganizationNotFoundException, NoWorkersException {
