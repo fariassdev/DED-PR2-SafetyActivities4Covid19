@@ -30,33 +30,31 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     private int numGroups;
 
     private User mostActiveUser;
-    private OrderedVector<Activity> bestActivity;
 
     private Role[] roles;
 
-    private OrderedVector<Activity> bestActivitiesByRating;
+    private OrderedVector<Activity> bestActivity;
     private OrderedVector<Organization> bestOrganizations;
 
     public SafetyActivities4Covid19Impl() {
+        activities = new DiccionarioAVLImpl<String, Activity>();
+        orders = new DiccionarioAVLImpl<String, Order>();
+        groups = new DiccionarioAVLImpl<String, Group>();
         users = new TablaDispersion<String, User>(U);
+        organizations = new TablaDispersion<String, Organization>(O);
+        records = new ColaConPrioridad<Record>(Record.CMP_V);
+        roles = new Role[MAX_NUMBER_OF_ROLES];
+        bestActivity = new OrderedVector<Activity>(A, Activity.CMP_V);
+        bestOrganizations = new OrderedVector<Organization>(O, Organization.CMP_V);
+        mostActiveUser = null;
         numUsers = 0;
         numRoles = 0;
         numOrders = 0;
         numGroups = 0;
         numWorkers = 0;
-        organizations = new TablaDispersion<String, Organization>(O);
-        numOrganizations = 0;
-        records = new ColaConPrioridad<Record>(Record.CMP_V);
-        activities = new DiccionarioAVLImpl<String, Activity>();
-        orders = new DiccionarioAVLImpl<String, Order>();
-        groups = new DiccionarioAVLImpl<String, Group>();
         totalRecords = 0;
         rejectedRecords = 0;
-        mostActiveUser = null;
-        bestActivity = new OrderedVector<Activity>(A, Activity.CMP_V);
-        roles = new Role[MAX_NUMBER_OF_ROLES];
-        bestActivitiesByRating = new OrderedVector<Activity>(A, Activity.CMP_V);
-        bestOrganizations = new OrderedVector<Organization>(O, Organization.CMP_V);
+        numOrganizations = 0;
     }
 
     private String generateOrderId( LocalDate date, String customerId ) {
