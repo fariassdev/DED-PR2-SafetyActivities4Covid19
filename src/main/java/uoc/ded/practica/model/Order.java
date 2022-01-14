@@ -3,7 +3,6 @@ package uoc.ded.practica.model;
 import uoc.ei.tads.Iterador;
 import uoc.ei.tads.ListaEncadenada;
 
-import java.time.LocalDate;
 import java.util.Comparator;
 
 public class Order {
