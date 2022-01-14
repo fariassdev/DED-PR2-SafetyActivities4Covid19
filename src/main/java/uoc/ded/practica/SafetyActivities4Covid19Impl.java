@@ -103,7 +103,9 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         	throw new OrganizationNotFoundException();
         }
 
-        records.encolar(new Record(recordId, actId, description, date, dateRecord, mode, num, organization));
+        final Record record = new Record( recordId, actId, description, date, dateRecord, mode, num, organization );
+        records.encolar( record );
+        organization.addRecord( record );
         totalRecords++;
     }
 
@@ -299,7 +301,8 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public int numRecordsByOrganization(String organizationId) {
-        return 0;
+        Organization organization = this.organizations.consultar( organizationId );
+        return organization.numRecords();
     }
 
     public int numActivitiesByOrganization(String organizationId) {

@@ -15,6 +15,7 @@ public class Organization {
     private String name;
     private ListaEncadenada<Activity> activities;
     private ListaEncadenada<Worker> workers;
+    private ListaEncadenada<Record> records;
 
     public Organization(String organizationId, String name, String description) {
         this.organizationId = organizationId;
@@ -22,6 +23,7 @@ public class Organization {
         this.description = description;
         activities = new ListaEncadenada<Activity>();
         workers = new ListaEncadenada<Worker>();
+        records = new ListaEncadenada<Record>();
     }
 
     public String getName() {
@@ -93,6 +95,14 @@ public class Organization {
 
     public int numWorkers() {
         return workers.numElems();
+    }
+
+    public void addRecord( Record record) {
+        records.insertarAlFinal(record);
+    }
+
+    public int numRecords() {
+        return records.numElems();
     }
 
     public Double getAverageActivityRating() {
