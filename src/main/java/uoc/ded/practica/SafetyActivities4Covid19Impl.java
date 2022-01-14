@@ -343,7 +343,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public Group getGroup(String groupId) {
-        return null;
+        return this.groups.consultar( groupId );
     }
 
     public int numWorkers() {
