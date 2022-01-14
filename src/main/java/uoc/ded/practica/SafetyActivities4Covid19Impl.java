@@ -44,8 +44,8 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         organizations = new TablaDispersion<String, Organization>(O);
         records = new ColaConPrioridad<Record>(Record.CMP_V);
         roles = new Role[R];
-        bestActivity = new OrderedVector<Activity>(A, Activity.CMP_V);
-        bestOrganizations = new OrderedVector<Organization>(O, Organization.CMP_V);
+        bestActivity = new OrderedVector<Activity>(BEST_10_ACTIVITIES, Activity.CMP_V);
+        bestOrganizations = new OrderedVector<Organization>(BEST_ORGANIZATIONS, Organization.CMP_V);
         mostActiveUser = null;
         numUsers = 0;
         numRoles = 0;

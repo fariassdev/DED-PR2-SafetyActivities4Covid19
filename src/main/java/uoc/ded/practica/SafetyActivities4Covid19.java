@@ -24,11 +24,6 @@ public interface SafetyActivities4Covid19 {
     public static final int BEST_10_ACTIVITIES = 10;
 
     /**
-     * dimensión para el vector de roles
-     */
-    public static final int MAX_NUMBER_OF_ROLES = 50;
-
-    /**
      * dimensión del contenedor de usuarios
      */
     public static final  int U = 45;
