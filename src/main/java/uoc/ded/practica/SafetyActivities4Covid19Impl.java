@@ -110,6 +110,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         final Record record = new Record( recordId, actId, description, date, dateRecord, mode, num, organization );
         records.encolar( record );
         organization.addRecord( record );
+        updateBestOrganization(organization);
         totalRecords++;
     }
 
@@ -228,9 +229,6 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
 
         activity.addRating(rating, message, user);
         updateBestActivity(activity);
-
-        Organization organization = this.organizations.consultar( activity.getActId() );
-        updateBestOrganization(organization);
     }
 
     private void updateBestActivity(Activity activity) {
