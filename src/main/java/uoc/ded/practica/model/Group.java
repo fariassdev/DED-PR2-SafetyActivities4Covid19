@@ -63,4 +63,14 @@ public class Group {
         }
         return 0;
     }
+
+    public Double valueOf() {
+        int badgeValueSum = 0;
+
+        for (Iterador<User> it = this.members(); it.haySiguiente();) {
+            badgeValueSum += it.siguiente().getBadge(this.date).getValue();
+        }
+        Double averageBadgeValue = (double) (badgeValueSum / this.numMembers());
+        return averageBadgeValue;
+    }
 }

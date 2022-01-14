@@ -415,14 +415,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         if (group == null) {
             throw new GroupNotFoundException();
         }
-        LocalDate groupDate = group.getDate();
-        int badgeValueSum = 0;
-
-        for (Iterador<User> it = group.members(); it.haySiguiente();) {
-            badgeValueSum += it.siguiente().getBadge(groupDate).getValue();
-        }
-        Double averageBadgeValue = Double.valueOf(badgeValueSum / group.numMembers());
-        return averageBadgeValue;
+        return group.valueOf();
     }
 
     public Order createTicketByGroup(String groupId, String actId, LocalDate date) throws GroupNotFoundException, ActivityNotFoundException, LimitExceededException {
@@ -455,7 +448,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         final String orderId = String.format(template, date.format(dateFormatter), group.getGroupId());
 
         Order order = new Order(orderId, group, activity, tickets);
-        order.setValue(this.valueOf(groupId));
+        order.setValue(group.valueOf());
         this.orders.insertar(orderId, order);
         activity.addOrder(order);
 
