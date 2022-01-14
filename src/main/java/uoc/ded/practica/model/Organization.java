@@ -97,6 +97,10 @@ public class Organization {
         return workers.numElems();
     }
 
+    public Iterador<Record> records() {
+        return records.elementos();
+    }
+
     public void addRecord( Record record) {
         records.insertarAlFinal(record);
     }

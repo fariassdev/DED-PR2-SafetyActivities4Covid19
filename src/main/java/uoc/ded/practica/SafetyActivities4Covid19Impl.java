@@ -202,7 +202,6 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         return order;
     }
 
-
     public Order assignSeat(String actId) throws ActivityNotFoundException {
         Activity activity = this.activities.consultar(actId);
         if (activity == null) {
@@ -229,6 +228,9 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
 
         activity.addRating(rating, message, user);
         updateBestActivity(activity);
+
+        Organization organization = this.organizations.consultar( activity.getActId() );
+        updateBestOrganization(organization);
     }
 
     private void updateBestActivity(Activity activity) {
@@ -236,6 +238,10 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         bestActivity.update(activity);
     }
 
+    private void updateBestOrganization(Organization organization) {
+        bestOrganizations.delete(organization);
+        bestOrganizations.update(organization);
+    }
 
     public Iterador<uoc.ded.practica.model.Rating> getRatings(String actId) throws ActivityNotFoundException, NoRatingsException {
         Activity activity = getActivity(actId);
@@ -534,15 +540,27 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public Iterador<Record> getRecordsByOrganization(String organizationId) throws NoRecordsException {
-        return null;
+        Organization organization = this.organizations.consultar( organizationId );
+        if (organization.numRecords() == 0) {
+            throw new NoRecordsException();
+        }
+        return organization.records();
+
     }
 
     public Iterador<Organization> best5Organizations() throws NoOrganizationException {
-        return null;
+        if (this.organizations.estaVacio()) {
+            throw new NoOrganizationException();
+        }
+
+        return bestOrganizations.elementos();
     }
 
     public Iterador<Activity> best10Activities() throws ActivityNotFoundException {
-        return null;
+        if (this.activities.estaVacio()) {
+            throw new ActivityNotFoundException();
+        }
+        return bestActivity.elementos();
     }
 
     public Worker getWorker(String workerId) {
