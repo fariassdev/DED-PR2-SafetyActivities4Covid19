@@ -51,10 +51,10 @@ public class Group {
     }
 
     public boolean hasMembers() {
-        if (this.members != null) {
-            return this.members.numElems() > 0;
+        if ( this.members == null ) {
+            return false;
         }
-        return false;
+        return this.members.numElems() > 0;
     }
 
     public int numMembers() {
