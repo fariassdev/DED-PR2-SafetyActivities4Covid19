@@ -74,6 +74,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
 
     public void addUser(User user) {
         users.insertar(user.getId(), user);
+        numUsers++;
     }
 
     public User getUser(String userId) {
