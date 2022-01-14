@@ -456,7 +456,11 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public Order getOrder(String orderId) throws OrderNotFoundException {
-        return null;
+        Order order = this.orders.consultar( orderId );
+        if (order == null) {
+            throw new OrderNotFoundException();
+        }
+        return order;
     }
 
     public Iterador<Worker> getWorkersByRole(String roleId) throws NoWorkersException {
