@@ -356,7 +356,8 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public int numWorkers(String organizationId) {
-        return 0;
+        Organization organization = this.organizations.consultar( organizationId );
+        return organization.numWorkers();
     }
 
     public void addRole(String roleId, String name) {
