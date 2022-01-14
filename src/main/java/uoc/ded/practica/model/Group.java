@@ -1,14 +1,17 @@
 package uoc.ded.practica.model;
 
+import uoc.ei.tads.Iterador;
+import uoc.ei.tads.ListaEncadenada;
+
 import java.time.LocalDate;
 
 public class Group {
     private String groupId;
     private String description;
     private LocalDate date;
-    private User[] members;
+    private ListaEncadenada<User> members;
 
-    public Group(String groupId, String description, LocalDate date, User[] members) {
+    public Group(String groupId, String description, LocalDate date, ListaEncadenada<User> members) {
         this.groupId = groupId;
         this.description = description;
         this.date = date;
@@ -39,24 +42,24 @@ public class Group {
         this.date = date;
     }
 
-    public User[] getMembers() {
-        return members;
+    public Iterador<User> members() {
+        return this.members.elementos();
     }
 
-    public void setMembers(User[] members) {
+    public void setMembers(ListaEncadenada<User> members) {
         this.members = members;
     }
 
     public boolean hasMembers() {
         if (this.members != null) {
-            return this.members.length > 0;
+            return this.members.numElems() > 0;
         }
         return false;
     }
 
     public int numMembers() {
         if (this.members != null) {
-            return this.members.length;
+            return this.members.numElems();
         }
         return 0;
     }

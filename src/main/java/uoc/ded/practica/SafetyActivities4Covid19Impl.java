@@ -417,8 +417,9 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         }
         LocalDate groupDate = group.getDate();
         int badgeValueSum = 0;
-        for (User user : group.getMembers()) {
-            badgeValueSum += user.getBadge(groupDate).getValue();
+
+        for (Iterador<User> it = group.members(); it.haySiguiente();) {
+            badgeValueSum += it.siguiente().getBadge(groupDate).getValue();
         }
         Double averageBadgeValue = Double.valueOf(badgeValueSum / group.numMembers());
         return averageBadgeValue;
