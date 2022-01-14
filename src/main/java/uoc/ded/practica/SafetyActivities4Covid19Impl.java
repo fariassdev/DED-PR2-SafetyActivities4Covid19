@@ -190,6 +190,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         Order order = new Order(orderId, user, activity, tickets);
         order.setValue((double) user.getBadge(date).getValue());
         this.orders.insertar(orderId, order);
+        this.numOrders++;
         activity.addOrder(order);
         user.addActivity(activity);
         updateMostActiveUser(user);
