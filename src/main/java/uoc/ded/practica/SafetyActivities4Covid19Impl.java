@@ -424,7 +424,40 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public Order createTicketByGroup(String groupId, String actId, LocalDate date) throws GroupNotFoundException, ActivityNotFoundException, LimitExceededException {
-        return null;
+        Group group = this.groups.consultar(groupId);
+        if (group == null) {
+            throw new GroupNotFoundException();
+        }
+        Activity activity = this.activities.consultar(actId);
+        if (activity == null) {
+            throw new ActivityNotFoundException();
+        }
+
+        if (!activity.hasAvailabilityOfTickets()) {
+            throw new LimitExceededException();
+        }
+
+        ListaEncadenada<Ticket> tickets = new ListaEncadenada<Ticket>();
+
+        for (Iterador<User> it = group.members(); it.haySiguiente();) {
+            User user = it.siguiente();
+            Ticket ticket = new Ticket(user, activity);
+            tickets.insertarAlPrincipio(ticket);
+            user.addActivity(activity);
+            updateMostActiveUser(user);
+        }
+
+        // TODO: Extract to generateOrderId(LocalDate date, String userId) method
+        final String template = "O-%s-%s";
+        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        final String orderId = String.format(template, date.format(dateFormatter), group.getGroupId());
+
+        Order order = new Order(orderId, group, activity, tickets);
+        order.setValue(this.valueOf(groupId));
+        this.orders.insertar(orderId, order);
+        activity.addOrder(order);
+
+        return order;
     }
 
     public Order getOrder(String orderId) throws OrderNotFoundException {
