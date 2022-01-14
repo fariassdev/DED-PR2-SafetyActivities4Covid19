@@ -382,21 +382,35 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public void addWorker( String userId, String name, String surname, LocalDate birthday, boolean covidCertificate, String roleId, String organizationId ) {
-        Worker worker = (Worker) this.users.consultar( userId );
+        User user = this.users.consultar( userId );
+        Worker worker = (user instanceof Worker ? (Worker) user : null);
         Role role = this.getRole( roleId );
         Organization organization = this.organizations.consultar( organizationId );
-        if ( worker == null ) {
-            numUsers++;
-            numWorkers++;
-        } else if ( !worker.getOrganization().getOrganizationId().equals( organizationId ) ) {
-            Organization previousUserOrganization = this.organizations.consultar( worker.getOrganization().getOrganizationId() );
-            previousUserOrganization.deleteWorker( worker.getId() );
+        if ( user != null && worker != null ) {
+            if ( !worker.getOrganization().getOrganizationId().equals( organizationId ) ) {
+                worker.getOrganization().deleteWorker( worker.getId() );
+                organization.addWorker( worker );
+            }
+
+            if ( !worker.getRoleId().equals( roleId ) ) {
+                worker.getRole().deleteWorker( worker.getId() );
+                role.addWorker( worker );
+            }
         }
 
         Worker newWorker = new Worker( userId, name, surname, birthday, covidCertificate, role, organization );
-        if ( worker == null ) {
+
+        if ( user == null ) {
+            numUsers++;
+            numWorkers++;
+            organization.addWorker( newWorker );
+            role.addWorker( newWorker );
+        } else if ( worker == null ) {
+            numWorkers++;
+            role.addWorker( newWorker );
             organization.addWorker( newWorker );
         }
+
 
         this.users.insertar( userId, newWorker );
     }
