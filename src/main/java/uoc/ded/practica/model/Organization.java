@@ -7,8 +7,8 @@ import uoc.ei.tads.Recorrido;
 
 import java.util.Comparator;
 
-public class Organization {
-    public static final Comparator<Organization> CMP_V = (Organization o1, Organization o2)->Double.compare(o1.getAverageActivityRating(), o2.getAverageActivityRating());
+public class Organization implements Comparable<Organization> {
+    public static final Comparator<Organization> CMP_V = (Organization o1, Organization o2)->o1.compareTo( o2 );
 
     private String organizationId;
     private String description;
@@ -117,5 +117,10 @@ public class Organization {
         }
         Double activityRatingAverage = activityRatingSum / this.activities.numElems();
         return activityRatingAverage;
+    }
+
+    @Override
+    public int compareTo( Organization o2 ) {
+        return Double.compare(this.getAverageActivityRating(), o2.getAverageActivityRating());
     }
 }

@@ -7,8 +7,8 @@ import uoc.ded.practica.SafetyActivities4Covid19;
 import uoc.ei.tads.*;
 
 public class Activity implements Comparable<Activity> {
-    public static final Comparator<String> CMP_K = (String o1, String o2)->o1.compareTo(o2);
-    public static final Comparator<Activity> CMP_V = (Activity a1, Activity a2)->Double.compare(a1.rating(), a2.rating());
+    public static final Comparator<String> CMP_K = (String a1, String a2)->a1.compareTo(a2);
+    public static final Comparator<Activity> CMP_V = (Activity a1, Activity a2)->a1.compareTo(a2);
 
     private String actId;
     private String description;
@@ -104,7 +104,7 @@ public class Activity implements Comparable<Activity> {
     }
 
     @Override
-    public int compareTo(Activity o) {
-        return actId.compareTo(o.actId);
+    public int compareTo(Activity a2) {
+        return Double.compare(this.rating(), a2.rating());
     }
 }
