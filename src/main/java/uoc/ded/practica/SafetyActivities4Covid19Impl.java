@@ -369,19 +369,36 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public void addWorker( String userId, String name, String surname, LocalDate birthday, boolean covidCertificate, String roleId, String organizationId ) {
-        User user = this.users.consultar( userId );
-        if ( user == null ) {
-            numUsers++;
-            numWorkers++;
-        }
+        Worker worker = (Worker) this.users.consultar( userId );
         Role role = this.getRole( roleId );
         Organization organization = this.organizations.consultar( organizationId );
-        user = new Worker( userId, name, surname, birthday, covidCertificate, role, organization );
-        this.users.insertar( userId, user );
+        if ( worker == null ) {
+            numUsers++;
+            numWorkers++;
+        } else if ( !worker.getOrganization().getOrganizationId().equals( organizationId ) ) {
+            Organization previousUserOrganization = this.organizations.consultar( worker.getOrganization().getOrganizationId() );
+            previousUserOrganization.deleteWorker( worker.getId() );
+        }
+
+        Worker newWorker = new Worker( userId, name, surname, birthday, covidCertificate, role, organization );
+        if ( worker == null ) {
+            organization.addWorker( newWorker );
+        }
+
+        this.users.insertar( userId, newWorker );
     }
 
     public Iterador<Worker> getWorkersByOrganization(String organizationId) throws OrganizationNotFoundException, NoWorkersException {
-        return null;
+        Organization organization = this.organizations.consultar( organizationId );
+        if (organization == null) {
+            throw new OrganizationNotFoundException();
+        }
+
+        if (!organization.hasWorkers()) {
+            throw new NoWorkersException();
+        }
+
+        return organization.workers();
     }
 
     public Iterador<User> getUsersInActivity(String activityId) throws ActivityNotFoundException, NoUserException {
