@@ -5,7 +5,6 @@ import java.util.Comparator;
 
 import uoc.ded.practica.SafetyActivities4Covid19;
 import uoc.ei.tads.Iterador;
-import uoc.ei.tads.Lista;
 import uoc.ei.tads.ListaEncadenada;
 
 public class User implements Comparable<User>{
@@ -18,10 +17,9 @@ public class User implements Comparable<User>{
     private String id;
     private String name;
     private String surname;
-    private Lista<Activity> activities;
+    private ListaEncadenada<Activity> activities;
     private LocalDate birthday; // No necesitamos la hora de nacimiento, LocalDate no lleva hora
     private boolean covidCertificate;
-    private SafetyActivities4Covid19.Badge badge;
 
     public User(String id, String name, String surname, LocalDate birthday, boolean covidCertificate) {
         this.id = id;
@@ -29,7 +27,7 @@ public class User implements Comparable<User>{
         this.surname = surname;
         this.birthday = birthday;
         this.covidCertificate = covidCertificate;
-        this.badge = null;
+        this.activities = new ListaEncadenada<Activity>();
     }
 
     public void setName(String name) {
@@ -66,10 +64,6 @@ public class User implements Comparable<User>{
 
     public int compareTo(User o) {
         return getId().compareTo(o.getId());
-    }
-
-    public Iterador<Activity> answers() {
-        return activities.elementos();
     }
 
     public LocalDate getBirthday() {
@@ -115,10 +109,34 @@ public class User implements Comparable<User>{
     }
 
     public SafetyActivities4Covid19.Badge getBadge(LocalDate date) {
+        SafetyActivities4Covid19.Badge badge = null;
+        final int yearsOld = this.birthday.until(date).getYears();
+        if (this.covidCertificate) {
+            if (yearsOld >= 65) {
+                badge = SafetyActivities4Covid19.Badge.SENIOR_PLUS;
+            } else if (yearsOld < 65 && yearsOld >= 50) {
+                badge = SafetyActivities4Covid19.Badge.SENIOR;
+            } else if (yearsOld < 50 && yearsOld >= 30) {
+                if (this.numActivities() > 5) {
+                    badge = SafetyActivities4Covid19.Badge.MASTER_PLUS;
+                } else {
+                    badge = SafetyActivities4Covid19.Badge.MASTER;
+                }
+            } else if (yearsOld < 30 && yearsOld >= 18) {
+                if (this.numActivities() > 5) {
+                    badge = SafetyActivities4Covid19.Badge.YOUTH_PLUS;
+                } else {
+                    badge = SafetyActivities4Covid19.Badge.YOUTH;
+                }
+            } else if (yearsOld < 18 && yearsOld >= 12 && this.isCovidCertificate()) {
+                badge = SafetyActivities4Covid19.Badge.JUNIOR_PLUS;
+            }
+        }
+        if (yearsOld < 12) {
+            badge = SafetyActivities4Covid19.Badge.JUNIOR;
+        } else if (yearsOld > 12 && !this.isCovidCertificate()) {
+            badge = SafetyActivities4Covid19.Badge.DARK;
+        }
         return badge;
-    }
-
-    public void setBadge(SafetyActivities4Covid19.Badge badge) {
-        this.badge = badge;
     }
 }

@@ -6,9 +6,9 @@ public class Group {
     private String groupId;
     private String description;
     private LocalDate date;
-    private String[] members;
+    private User[] members;
 
-    public Group(String groupId, String description, LocalDate date, String[] members) {
+    public Group(String groupId, String description, LocalDate date, User[] members) {
         this.groupId = groupId;
         this.description = description;
         this.date = date;
@@ -39,11 +39,11 @@ public class Group {
         this.date = date;
     }
 
-    public String[] getMembers() {
+    public User[] getMembers() {
         return members;
     }
 
-    public void setMembers(String[] members) {
+    public void setMembers(User[] members) {
         this.members = members;
     }
 

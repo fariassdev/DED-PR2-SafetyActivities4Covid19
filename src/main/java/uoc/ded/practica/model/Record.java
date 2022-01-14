@@ -2,15 +2,19 @@ package uoc.ded.practica.model;
 
 import uoc.ded.practica.SafetyActivities4Covid19;
 
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.Date;
 
 public class Record {
+    public static final Comparator<Record> CMP_V = (Record a1, Record a2)->a1.getDateRecord().compareTo(a2.getDateRecord());
 
     private String actId;
+    private Activity activity;
     private String description;
     private String recordId;
+    private LocalDate dateRecord;
     private Date dateAct;
-    private Date dateStatus;
     private String descriptionStatus;
     private SafetyActivities4Covid19.Mode mode;
     private int num;
@@ -18,12 +22,13 @@ public class Record {
     private Organization organization;
 
 
-    public Record(String recordId, String actId, String description, Date date,
+    public Record(String recordId, String actId, String description, Date dateAct, LocalDate dateRecord,
                   SafetyActivities4Covid19.Mode mode, int num, Organization organization) {
         this.recordId = recordId;
         this.actId = actId;
         this.description = description;
-        this.dateAct = date;
+        this.dateAct = dateAct;
+        this.dateRecord = dateRecord;
         this.mode = mode;
         this.num = num;
         this.status = SafetyActivities4Covid19.Status.PENDING;
@@ -32,6 +37,10 @@ public class Record {
 
     public String getActId() {
         return actId;
+    }
+
+    public Activity getActivity() {
+        return this.activity;
     }
 
     public void setActId(String actId) {
@@ -62,20 +71,20 @@ public class Record {
         this.recordId = recordId;
     }
 
+    public LocalDate getDateRecord() {
+        return dateRecord;
+    }
+
     public Date getDateAct() {
         return dateAct;
     }
 
-    public Date getDateStatus() {
-        return dateStatus;
+    public void setDateAct(Date dateAct) {
+        this.dateAct = dateAct;
     }
 
-    public void setDateStatus(Date dateStatus) {
-        this.dateStatus = dateStatus;
-    }
-
-    public void setDateAct(Date date) {
-        this.dateAct = date;
+    public void setDateRecord(LocalDate date) {
+        this.dateRecord = date;
     }
 
     public SafetyActivities4Covid19.Mode getMode() {
@@ -104,7 +113,7 @@ public class Record {
 
     public void update(SafetyActivities4Covid19.Status status, Date date, String description) {
         this.setStatus(status);
-        this.setDateStatus(date);
+        this.setDateAct(date);
         this.setDescriptionStatus(description);
     }
 
@@ -115,6 +124,7 @@ public class Record {
     public Activity newActivity() {
         Activity activity = new Activity(this.actId, this.description, this.dateAct, this.mode, this.num, this);
         this.organization.addActivity(activity);
+        this.activity = activity;
 
         return activity;
     }

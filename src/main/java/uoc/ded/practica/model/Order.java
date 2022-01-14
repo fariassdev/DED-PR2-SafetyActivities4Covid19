@@ -1,29 +1,43 @@
 package uoc.ded.practica.model;
 
-import uoc.ei.tads.Cola;
-import uoc.ei.tads.ColaConPrioridad;
 import uoc.ei.tads.Iterador;
+import uoc.ei.tads.ListaEncadenada;
+
+import java.time.LocalDate;
+import java.util.Comparator;
 
 public class Order {
+    public static final Comparator<Order> CMP_V = (Order o1, Order o2)-> Double.compare(o2.getValue(), o1.getValue());
+
     private String orderId;
+    private Group group;
     private User user;
     private Activity activity;
-    private ColaConPrioridad<Ticket> tickets;
-    private int seat;
-    private int nextSeat;
+    private ListaEncadenada<Ticket> tickets;
+    private Double value;
 
+    public Order(String orderId, Group group, Activity activity, ListaEncadenada<Ticket> tickets) {
+        this.orderId = orderId;
+        this.group = group;
+        this.activity = activity;
+        this.tickets = tickets;
+        this.value = 0.;
+    }
 
-    public Order(String orderId, User user, Activity activity, ColaConPrioridad<Ticket> tickets, int seat) {
+    public Order(String orderId, User user, Activity activity, ListaEncadenada<Ticket> tickets) {
         this.orderId = orderId;
         this.user = user;
         this.activity = activity;
         this.tickets = tickets;
-        this.seat = seat;
-        this.nextSeat = 1;
+        this.value = 0.;
     }
 
-    public int getValue() {
-        return 0;
+    public Double getValue() {
+        return this.value;
+    }
+
+    public void setValue(Double value) {
+        this.value = value;
     }
 
     public String getId() {
@@ -38,12 +52,12 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public User getUser() {
-        return user;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public Activity getActivity() {
@@ -54,25 +68,7 @@ public class Order {
         this.activity = activity;
     }
 
-    public void addTicket(User user) {
-        tickets.encolar(new Ticket(user, this.activity));
-    }
-
-    public Ticket pop() {
-        Ticket t = tickets.desencolar();
-        t.setSeat(nextSeat++);
-        return t;
-    }
-
     public Iterador<Ticket> tickets() {
         return tickets.elementos();
-    }
-
-    public int getSeat() {
-        return seat;
-    }
-
-    public void setSeat(int seat) {
-        this.seat = seat;
     }
 }

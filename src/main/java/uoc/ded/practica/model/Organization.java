@@ -9,12 +9,12 @@ import java.util.Comparator;
 public class Organization {
     public static final Comparator<Organization> CMP_V = (Organization o1, Organization o2)->Double.compare(o1.getAverageActivityRating(), o2.getAverageActivityRating());
 
-    private int organizationId;
+    private String organizationId;
     private String description;
     private  String name;
     private Lista<Activity> activities;
 
-    public Organization(int organizationId, String name, String description) {
+    public Organization(String organizationId, String name, String description) {
         this.organizationId = organizationId;
         this.name = name;
         this.description = description;
@@ -25,7 +25,7 @@ public class Organization {
         return name;
     }
 
-    public int getOrganizationId() {
+    public String getOrganizationId() {
         return organizationId;
     }
 
@@ -33,7 +33,7 @@ public class Organization {
         return description;
     }
 
-    public void setOrganizationId(int organizationId) {
+    public void setOrganizationId(String organizationId) {
         this.organizationId = organizationId;
     }
 

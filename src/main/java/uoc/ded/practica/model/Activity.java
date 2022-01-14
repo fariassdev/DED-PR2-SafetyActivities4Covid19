@@ -14,23 +14,22 @@ public class Activity implements Comparable<Activity> {
     private String description;
     private Date date;
     private SafetyActivities4Covid19.Mode mode;
-    private int total;
     private int availabilityOfTickets;
     private Record record;
     private ColaConPrioridad<Order> orders;
     private Lista<Rating> ratings;
     private int totalRatings;
+    private int nextSeat;
 
     public Activity(String actId, String description, Date dateAct, SafetyActivities4Covid19.Mode mode, int num, Record record) {
-
         this.actId = actId;
         this.description = description;
         this.date = dateAct;
         this.mode = mode;
-        this.total = num;
         this.availabilityOfTickets = num;
         this.record = record;
-        orders = new ColaConPrioridad<Order>();
+        this.nextSeat = 1;
+        orders = new ColaConPrioridad<Order>(Order.CMP_V);
         ratings = new ListaEncadenada<Rating>();
     }
 
@@ -43,9 +42,17 @@ public class Activity implements Comparable<Activity> {
         return (availabilityOfTickets > 0  );
     }
 
-    public void addOrder(User user, ColaConPrioridad<Ticket> tickets, int seat) {
-        orders.encolar(new Order("test", user, this, tickets, seat));
+    public void addOrder(Order order) {
+        orders.encolar(order);
         availabilityOfTickets--;
+    }
+
+    public Order pop() {
+        Order order = orders.desencolar();
+        for (Iterador<Ticket> it = order.tickets(); it.haySiguiente();) {
+            it.siguiente().setSeat(nextSeat++);
+        }
+        return order;
     }
 
     public boolean is(String actId) {
@@ -76,6 +83,14 @@ public class Activity implements Comparable<Activity> {
 
     public int availabilityOfTickets() {
         return availabilityOfTickets;
+    }
+
+    public ColaConPrioridad<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(ColaConPrioridad<Order> orders) {
+        this.orders = orders;
     }
 
     @Override
