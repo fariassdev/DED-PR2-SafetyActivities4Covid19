@@ -335,14 +335,12 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public int numWorkersByRole(String roleId) {
-        int numWorkers = 0;
-        for (Iterador<User> it = this.users.elementos(); it.haySiguiente();) {
-            User user = it.siguiente();
-            if (user instanceof Worker && ((Worker) user).getRoleId().equals( roleId ) ) {
-                numWorkers++;
+        for (Role role : this.roles) {
+            if ( role.getRoleId().equals( roleId ) ) {
+                return role.numWorkers();
             }
         }
-        return numWorkers;
+        return 0;
     }
 
     public Role getRole(String roleId) {
