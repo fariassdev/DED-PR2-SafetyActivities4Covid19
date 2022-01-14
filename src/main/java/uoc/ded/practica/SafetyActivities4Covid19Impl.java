@@ -59,6 +59,12 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         bestOrganizations = new OrderedVector<Organization>(O, Organization.CMP_V);
     }
 
+    private String generateOrderId( LocalDate date, String customerId ) {
+        final String template = "O-%s-%s";
+        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern( "yyyyMMdd" );
+        return String.format( template, date.format( dateFormatter ), customerId );
+    }
+
     public void addUser(String userId, String name, String surname, LocalDate birthday, boolean covidCertificate) {
         User u = getUser(userId);
         if (u != null) {
@@ -181,10 +187,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         	throw new LimitExceededException();
         }
 
-        // TODO: Extract to generateOrderId(LocalDate date, String userId) method
-        final String template = "O-%s-%s";
-        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        final String orderId = String.format(template, date.format(dateFormatter), user.getId());
+        final String orderId = generateOrderId( date, user.getId() );
 
         ListaEncadenada<Ticket> tickets = new ListaEncadenada<Ticket>();
         Ticket ticket = new Ticket(user, activity);
@@ -488,10 +491,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
             activity.addUser( user );
         }
 
-        // TODO: Extract to generateOrderId(LocalDate date, String userId) method
-        final String template = "O-%s-%s";
-        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        final String orderId = String.format(template, date.format(dateFormatter), group.getGroupId());
+        final String orderId = generateOrderId( date, group.getGroupId() );
 
         Order order = new Order(orderId, group, activity, tickets);
         order.setValue(group.valueOf());
