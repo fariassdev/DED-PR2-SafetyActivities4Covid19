@@ -441,17 +441,21 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         return this.getUser( userId ).getBadge( day );
     }
 
+    public void addGroup(Group group) {
+        this.groups.insertar( group.getGroupId(), group );
+        numGroups++;
+    }
+
     public void addGroup( String groupId, String description, LocalDate date, String... members ) {
-        Group group = this.groups.consultar( groupId );
+        Group group = this.getGroup( groupId );
         ListaEncadenada<User> memberList = new ListaEncadenada<User>();
         for ( String userId : members ) {
-            User user = this.users.consultar( userId );
+            User user = this.getUser( userId );
             memberList.insertarAlFinal( user );
         }
         if ( group == null ) {
             group = new Group( groupId, description, date, memberList );
-            this.groups.insertar( groupId, group );
-            numGroups++;
+            this.addGroup(group);
         } else {
             group.setDescription( description );
             group.setDate( date );
@@ -460,7 +464,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public Iterador<User> membersOf( String groupId ) throws GroupNotFoundException, NoUserException {
-        Group group = this.groups.consultar( groupId );
+        Group group = this.getGroup( groupId );
         if ( group == null ) {
             throw new GroupNotFoundException();
         }
@@ -473,7 +477,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public double valueOf( String groupId ) throws GroupNotFoundException {
-        Group group = this.groups.consultar( groupId );
+        Group group = this.getGroup( groupId );
         if ( group == null ) {
             throw new GroupNotFoundException();
         }
@@ -481,7 +485,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public Order createTicketByGroup( String groupId, String actId, LocalDate date ) throws GroupNotFoundException, ActivityNotFoundException, LimitExceededException {
-        Group group = this.groups.consultar( groupId );
+        Group group = this.getGroup( groupId );
         if ( group == null ) {
             throw new GroupNotFoundException();
         }
