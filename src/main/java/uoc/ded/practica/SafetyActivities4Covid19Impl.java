@@ -308,7 +308,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public int numRecordsByOrganization( String organizationId ) {
-        Organization organization = this.organizations.consultar( organizationId );
+        Organization organization = this.getOrganization( organizationId );
         return organization.numRecords();
     }
 
@@ -371,7 +371,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public int numWorkers( String organizationId ) {
-        Organization organization = this.organizations.consultar( organizationId );
+        Organization organization = this.getOrganization( organizationId );
         return organization.numWorkers();
     }
 
@@ -389,7 +389,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         User user = this.getUser( userId );
         Worker worker = (user instanceof Worker ? (Worker) user : null);
         Role role = this.getRole( roleId );
-        Organization organization = this.organizations.consultar( organizationId );
+        Organization organization = this.getOrganization( organizationId );
         if ( user != null && worker != null ) {
             if ( !worker.getOrganization().getOrganizationId().equals( organizationId ) ) {
                 worker.getOrganization().deleteWorker( worker.getId() );
@@ -419,7 +419,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public Iterador<Worker> getWorkersByOrganization( String organizationId ) throws OrganizationNotFoundException, NoWorkersException {
-        Organization organization = this.organizations.consultar( organizationId );
+        Organization organization = this.getOrganization( organizationId );
         if ( organization == null ) {
             throw new OrganizationNotFoundException();
         }
@@ -543,7 +543,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public Iterador<Record> getRecordsByOrganization( String organizationId ) throws NoRecordsException {
-        Organization organization = this.organizations.consultar( organizationId );
+        Organization organization = this.getOrganization( organizationId );
         if ( organization.numRecords() == 0 ) {
             throw new NoRecordsException();
         }
