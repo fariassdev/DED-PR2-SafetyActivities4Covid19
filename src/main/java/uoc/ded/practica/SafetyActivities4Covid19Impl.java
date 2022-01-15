@@ -35,7 +35,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
 
     private Role[] roles;
     private int numRoles;
-    
+
     public SafetyActivities4Covid19Impl() {
         activities = new DiccionarioAVLImpl<String, Activity>();
         orders = new DiccionarioAVLImpl<String, Order>();
@@ -196,7 +196,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         tickets.insertarAlPrincipio( ticket );
         Order order = new Order( orderId, user, activity, tickets );
         order.setValue( (double) user.getBadge( date ).getValue() );
-        this.orders.insertar( orderId, order );
+        this.addOrder( order );
         this.numOrders++;
         activity.addOrder( order );
         user.addActivity( activity );
@@ -447,7 +447,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         return this.getUser( userId ).getBadge( day );
     }
 
-    public void addGroup(Group group) {
+    public void addGroup( Group group ) {
         this.groups.insertar( group.getGroupId(), group );
         numGroups++;
     }
@@ -461,7 +461,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         }
         if ( group == null ) {
             group = new Group( groupId, description, date, memberList );
-            this.addGroup(group);
+            this.addGroup( group );
         } else {
             group.setDescription( description );
             group.setDate( date );
@@ -519,7 +519,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
 
         Order order = new Order( orderId, group, activity, tickets );
         order.setValue( group.valueOf() );
-        this.orders.insertar( orderId, order );
+        this.addOrder( order );
         activity.addOrder( order );
 
         return order;
@@ -531,6 +531,10 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
             throw new OrderNotFoundException();
         }
         return order;
+    }
+
+    public void addOrder( Order order ) {
+        this.orders.insertar( order.getId(), order );
     }
 
     public Iterador<Worker> getWorkersByRole( String roleId ) throws NoWorkersException {
