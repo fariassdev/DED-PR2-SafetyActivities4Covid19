@@ -96,13 +96,17 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
             organization.setDescription( description );
         } else {
             organization = new Organization( organizationId, name, description );
-            organizations.insertar( organizationId, organization );
-            numOrganizations++;
+            this.addOrganization( organization );
         }
     }
 
     public Organization getOrganization( String organizationId ) {
         return organizations.consultar( organizationId );
+    }
+
+    public void addOrganization(Organization organization) {
+        this.organizations.insertar( organization.getOrganizationId(), organization );
+        numOrganizations++;
     }
 
     public void addRecord( String recordId, String actId, String description, Date date, LocalDate dateRecord, Mode mode, int num, String organizationId ) throws OrganizationNotFoundException {
