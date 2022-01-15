@@ -64,21 +64,25 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public void addUser( String userId, String name, String surname, LocalDate birthday, boolean covidCertificate ) {
-        User u = getUser( userId );
-        if ( u != null ) {
-            u.setName( name );
-            u.setSurname( surname );
-            u.setBirthday( birthday );
-            u.setCovidCertificate( covidCertificate );
+        User user = getUser( userId );
+        if ( user != null ) {
+            user.setName( name );
+            user.setSurname( surname );
+            user.setBirthday( birthday );
+            user.setCovidCertificate( covidCertificate );
         } else {
-            u = new User( userId, name, surname, birthday, covidCertificate );
-            addUser( u );
+            user = new User( userId, name, surname, birthday, covidCertificate );
+            addUser( user );
         }
     }
 
     public void addUser( User user ) {
         users.insertar( user.getId(), user );
         numUsers++;
+    }
+
+    public void addWorker( Worker worker ) {
+        users.insertar( worker.getId(), worker );
     }
 
     public User getUser( String userId ) {
@@ -382,7 +386,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public void addWorker( String userId, String name, String surname, LocalDate birthday, boolean covidCertificate, String roleId, String organizationId ) {
-        User user = this.users.consultar( userId );
+        User user = this.getUser( userId );
         Worker worker = (user instanceof Worker ? (Worker) user : null);
         Role role = this.getRole( roleId );
         Organization organization = this.organizations.consultar( organizationId );
@@ -411,8 +415,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
             organization.addWorker( newWorker );
         }
 
-
-        this.users.insertar( userId, newWorker );
+        this.addWorker( newWorker );
     }
 
     public Iterador<Worker> getWorkersByOrganization( String organizationId ) throws OrganizationNotFoundException, NoWorkersException {
@@ -564,7 +567,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public Worker getWorker( String workerId ) {
-        return (Worker) this.users.consultar( workerId );
+        return (Worker) this.getUser( workerId );
     }
 
 }
