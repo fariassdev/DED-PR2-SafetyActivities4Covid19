@@ -14,28 +14,28 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     private TablaDispersion<String, User> users;
     private int numUsers;
     private int numWorkers;
+    private User mostActiveUser;
 
     private TablaDispersion<String, Organization> organizations;
     private int numOrganizations;
-
-    private ColaConPrioridad<Record> records;
-    private DiccionarioAVLImpl<String, Activity> activities;
-    private DiccionarioAVLImpl<String, Order> orders;
-    private DiccionarioAVLImpl<String, Group> groups;
-
-    private int totalRecords;
-    private int rejectedRecords;
-    private int numRoles;
-    private int numOrders;
-    private int numGroups;
-
-    private User mostActiveUser;
-
-    private Role[] roles;
-
-    private OrderedVector<Activity> bestActivity;
     private OrderedVector<Organization> bestOrganizations;
 
+    private ColaConPrioridad<Record> records;
+    private int totalRecords;
+    private int rejectedRecords;
+
+    private DiccionarioAVLImpl<String, Activity> activities;
+    private OrderedVector<Activity> bestActivity;
+
+    private DiccionarioAVLImpl<String, Order> orders;
+    private int numOrders;
+
+    private DiccionarioAVLImpl<String, Group> groups;
+    private int numGroups;
+
+    private Role[] roles;
+    private int numRoles;
+    
     public SafetyActivities4Covid19Impl() {
         activities = new DiccionarioAVLImpl<String, Activity>();
         orders = new DiccionarioAVLImpl<String, Order>();
