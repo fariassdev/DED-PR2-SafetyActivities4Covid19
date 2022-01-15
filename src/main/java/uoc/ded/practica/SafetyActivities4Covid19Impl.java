@@ -130,7 +130,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         record.update( status, date, description );
         if ( record.isEnabled() ) {
             Activity activity = record.newActivity();
-            activities.insertar( activity.getActId(), activity );
+            this.addActivity( activity );
         } else {
             rejectedRecords++;
         }
@@ -207,7 +207,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public Order assignSeat( String actId ) throws ActivityNotFoundException {
-        Activity activity = this.activities.consultar( actId );
+        Activity activity = this.getActivity( actId );
         if ( activity == null ) {
             throw new ActivityNotFoundException();
         }
@@ -322,6 +322,9 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         return activities.consultar( actId );
     }
 
+    public void addActivity( Activity activity ) {
+        activities.insertar( activity.getActId(), activity );
+    }
 
     public int availabilityOfTickets( String actId ) {
         Activity activity = getActivity( actId );
@@ -432,7 +435,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
     }
 
     public Iterador<User> getUsersInActivity( String activityId ) throws ActivityNotFoundException, NoUserException {
-        Activity activity = this.activities.consultar( activityId );
+        Activity activity = this.getActivity( activityId );
         if ( activity == null ) {
             throw new ActivityNotFoundException();
         }
@@ -492,7 +495,7 @@ public class SafetyActivities4Covid19Impl implements SafetyActivities4Covid19 {
         if ( group == null ) {
             throw new GroupNotFoundException();
         }
-        Activity activity = this.activities.consultar( actId );
+        Activity activity = this.getActivity( actId );
         if ( activity == null ) {
             throw new ActivityNotFoundException();
         }
